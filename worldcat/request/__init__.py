@@ -5,6 +5,7 @@ import urllib2
 from worldcat.exceptions import APIKeyError, APIKeyNotSpecifiedError, \
                          EmptyQueryError, EmptyRecordNumberError, \
                          InvalidArgumentError, InvalidNumberTypeError
+from worldcat.response import WorldCatResponse
                          
 class WorldCatRequest(object):
     """request.WorldCatRequest: base class for all requests to WorldCat APIs
@@ -25,21 +26,25 @@ class WorldCatRequest(object):
         self.args = kwargs
         self._validators = {}
         
-    def get(self):
-        """Get method for all WorldCatRequests.
+    def api_url(self):
+        """Dummy method to set API URL; should be overridden by subclasses."""
+        pass
         
-        Subclasses should set the base API URL before passing self onto
-        WorldCatRequest.get():
+    def get_response(self):
+        """Dummy method to get response; should be overrriden by subclasses"""
+        self.http_get()
+        return WorldCatResponse(self)
         
-            class WCSubClass(WorldCatRequest):
-                def __init__ ...
-                def get(self):
-                    self.url = 'http://api.stuff.oclc.org/foo/bar'
-                    return WorldCatRequest.get(self)
-                    
-        """
-        _query_url = '%s?%s' % (self.url, urllib.urlencode(self.args))
+    def http_get(self):
+        """HTTP Get method for all WorldCatRequests.
+        
+        Should be called by as separate get method."""
+        _query_url = '%s?%s' % (self.api_url(), urllib.urlencode(self.args))
         self.response = urllib2.urlopen(_query_url).read()
+        
+    def subclass_validator(self, quiet):
+        """Dummy validator method; should be overriden by subclasses."""
+        pass
         
     def validate(self, quiet):
         """Validate arguments using a dict of valid values for each argument.
@@ -64,6 +69,7 @@ class WorldCatRequest(object):
                         WorldCatRequest.validate(self)
         
         """
+        subvalid = self.subclass_validator(quiet)
         for key in self._validators:
             if key in self.args:
                 if (self.args[key] in self._validators[key]):
@@ -76,6 +82,9 @@ class WorldCatRequest(object):
                 pass
         
         if quiet == True:
-            return True
+            if subvalid == True:
+                return True
+            else:
+                return False
         else:
             pass

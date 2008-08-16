@@ -11,12 +11,12 @@ class xIDRequest(WorldCatRequest):
             kwargs['format'] = 'python'
         WorldCatRequest.__init__(self, **kwargs)
         self.rec_num = rec_num
-    
-    def get(self):
-        """Get method for xIDRequests."""
-        WorldCatRequest.get(self)
-    
-    def validate(self, quiet=False):
+        
+    def get_response(self):
+        self.http_get()
+        return xIDResponse(self)
+        
+    def subclass_validator(self, quiet=False):
         """Validator method for xIDRequests.
 
         Does not validate ISSN or ISBN values; this should be handled
@@ -29,7 +29,7 @@ class xIDRequest(WorldCatRequest):
             else:
                 raise EmptyRecordNumberError
         else:
-            return WorldCatRequest.validate(self, quiet)
+            return True
 
 class xISSNRequest(WorldCatRequest):
     """request.xid.xISSNRequest: Class for xISSN requests
@@ -46,12 +46,9 @@ class xISSNRequest(WorldCatRequest):
             'format': ('xml', 'html', 'json', 'python', 'ruby')
             }
         
-    def get(self):
-        """Get method for xISSNRequests. Returns an xISSNResponse."""
+    def api_url(self):
         self.url = 'http://xissn.worldcat.org/webservices/xid/issn/%s' \
             % self.rec_num
-        xIDRequest.get(self)
-        return xIDResponse(self)
 
 class xISBNRequest(WorldCatRequest):
     """request.xisbn.xISBNRequest: Class for xISBN requests
@@ -68,9 +65,7 @@ class xISBNRequest(WorldCatRequest):
             'format': ('xml', 'html', 'json', 'python', 'ruby', 'text', 'csv')
             }
 
-    def get(self):
+    def api_url(self):
         """Get method for xISBNRequests. Returns an xISBNResponse."""
         self.url = 'http://xisbn.worldcat.org/webservices/xid/isbn/%s' \
             % self.rec_num
-        WorldCatRequest.get(self)
-        return xISBNResponse(self)

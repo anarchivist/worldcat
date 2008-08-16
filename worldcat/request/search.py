@@ -23,13 +23,13 @@ class SearchAPIRequest(WorldCatRequest):
             'format': ('atom','rss')
         }
 
-    def get(self):
+    def get_response(self):
         """Get method for SearchAPIRequests.
         
         Exception handling is specific to SearchAPIRequests.
         """
         try:
-            WorldCatRequest.get(self)
+            self.http_get()
         except urllib2.HTTPError, e:
             if e.code == 407:
                 raise APIKeyError
@@ -38,10 +38,6 @@ class SearchAPIRequest(WorldCatRequest):
             else:
                 raise
         return SearchAPIResponse(self)
-    
-    def validate(self, quiet):
-        """Validator method for SearchAPIRequests."""
-        WorldCatRequest.validate(self, quiet)
 
 class OpenSearchRequest(SearchAPIRequest):
     """request.search.OpenSearchRequest: queries search API using OpenSearch
@@ -51,12 +47,11 @@ class OpenSearchRequest(SearchAPIRequest):
         """Constructor for OpenSearch requests"""
         SearchAPIRequest.__init__(self, **kwargs)
         
-    def get(self):
-        """Get method for OpenSearchRequests."""
+    def api_url(self):
+        """API ase URL method for OpenSearchRequests."""
         self.url = 'http://worldcat.org/webservices/catalog/search/opensearch'
-        return SearchAPIRequest.get(self)
         
-    def validate(self, quiet=False):
+    def subclass_validator(self, quiet=False):
         """Validator method for OpenSearchRequests."""
         if 'q' not in self.args:
             if quiet == True:
@@ -64,7 +59,8 @@ class OpenSearchRequest(SearchAPIRequest):
             else:
                 raise EmptyQueryError
         else:
-            return SearchAPIRequest.validate(self, quiet)
+            return True
+
 
 class SRURequest(SearchAPIRequest):
     """request.search.SRURequest: queries search API using SRU
@@ -75,12 +71,10 @@ class SRURequest(SearchAPIRequest):
         """Constructor method for SRURequests."""
         SearchAPIRequest.__init__(self, **kwargs)
 
-    def get(self):
-        """Get method for SRURequests."""
+    def api_url(self):
         self.url = 'http://worldcat.org/webservices/catalog/search/sru'
-        return SearchAPIRequest.get(self)
 
-    def validate(self, quiet=False):
+    def subclass_validator(self, quiet=False):
         """Validator method for SRURequests."""
         if 'query' not in self.args:
             if quiet == True:
@@ -88,7 +82,7 @@ class SRURequest(SearchAPIRequest):
             else:
                 raise EmptyQueryError
         else:
-            return SearchAPIRequest.validate(self, quiet)
+            return True
                     
 class ContentRequest(SearchAPIRequest):
     """request.search.ContentRequest: search API content request metaclass
@@ -101,7 +95,7 @@ class ContentRequest(SearchAPIRequest):
         SearchAPIRequest.__init__(self, **kwargs)
         self.rec_num = rec_num
     
-    def validate(self, quiet=False):
+    def subclass_validator(self, quiet=False):
         """Validator method for ContentRequests."""
         if self.rec_num is None:
             if quiet == True:
@@ -109,7 +103,7 @@ class ContentRequest(SearchAPIRequest):
             else:
                 raise EmptyRecordNumberError
         else:
-            return SearchAPIRequest.validate(self, quiet)
+            return True
 
 class BibRequest(ContentRequest):
     """request.search.BibRequest: retrieves single bibliographic records
@@ -120,10 +114,9 @@ class BibRequest(ContentRequest):
         """Constructor for BibRequests."""
         ContentRequest.__init__(self, rec_num, **kwargs)
 
-    def get(self):
+    def api_url(self):
         self.url = 'http://worldcat.org/webservices/catalog/content/%s' \
             % self.rec_num
-        return SearchAPIRequest.get(self)
 
 class CitationRequest(ContentRequest):
     """request.search.CitationRequest: retrieves formatted HTML citations
@@ -136,7 +129,7 @@ class CitationRequest(ContentRequest):
         """Constructor for CitationRequests."""
         ContentRequest.__init__(self, rec_num, **kwargs)
     
-    def get(self):
+    def api_url(self):
         """Get method for CitationRequests."""
         self.url = \
             'http://worldcat.org/webservices/catalog/content/citations/%s' \
@@ -155,14 +148,13 @@ class HoldingsRequest(ContentRequest):
         self.num_type = num_type
         ContentRequest.__init__(self, rec_num, **kwargs)
         
-    def get(self):
+    def api_url(self):
         """Get method for HoldingsRequests."""
         self.url = \
             'http://worldcat.org/webservices/catalog/content/libraries/%s%s' \
             % (NUM_TYPES.get(self._nt_validator), self.rec_num)
-        return SearchAPIRequest.get(self)        
 
-    def validate(self, quiet=False):
+    def subclass_validator(self, quiet=False):
         """Validator method for HoldingsRequests.
         
         Despite HoldingsRequests being able to handle ISBNs,
@@ -173,4 +165,4 @@ class HoldingsRequest(ContentRequest):
             else:
                 raise InvalidNumberTypeError
         else:
-            return ContentRequest.validate(self, quiet)
+            return True
