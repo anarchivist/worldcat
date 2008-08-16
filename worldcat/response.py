@@ -18,7 +18,8 @@ class WorldCatResponse(object):
             self.data = eval(self.data)
             self.eval = True
         else:
-            warnings.warn("Response is not a DictType", RuntimeWarning)
+            warnings.warn("Response is not an instance of %s" % _type,
+                            RuntimeWarning)
 
 class SearchAPIResponse(WorldCatResponse):
     """response.SearchAPIResponse: Response class for WorldCat Search API"""
