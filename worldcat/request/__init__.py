@@ -39,14 +39,15 @@ class WorldCatRequest(object):
         """HTTP Get method for all WorldCatRequests.
         
         Should be called by as separate get method."""
-        _query_url = '%s?%s' % (self.api_url(), urllib.urlencode(self.args))
+        self.api_url()
+        _query_url = '%s?%s' % (self.url, urllib.urlencode(self.args))
         self.response = urllib2.urlopen(_query_url).read()
         
     def subclass_validator(self, quiet):
         """Dummy validator method; should be overriden by subclasses."""
         pass
         
-    def validate(self, quiet):
+    def validate(self, quiet=False):
         """Validate arguments using a dict of valid values for each argument.
 
            Validators are specified as dicts with arguments as keys,

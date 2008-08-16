@@ -12,8 +12,9 @@ class WorldCatResponse(object):
         self.eval = False
         self.response_type = _r.__class__.__name__
         
-    def safe_eval(self):
-        if (type(eval(self.data)) is DictType):
+    def safe_eval(self, _type=dict):
+        """Only eval a response if """
+        if isinstance(self.data, _type):
             self.data = eval(self.data)
             self.eval = True
         else:
@@ -50,5 +51,6 @@ class xIDResponse(WorldCatResponse):
         """docstring for __init__"""
         WorldCatResponse.__init__(self, _r)
         self.response_format = _r.args['format']
+        self.method = _r.args['method']
         if (self.response_format == 'python'):
             self.safe_eval()

@@ -31,7 +31,7 @@ class xIDRequest(WorldCatRequest):
         else:
             return True
 
-class xISSNRequest(WorldCatRequest):
+class xISSNRequest(xIDRequest):
     """request.xid.xISSNRequest: Class for xISSN requests
     
     Other request methods to the xISSN API have not yet been implemented
@@ -50,7 +50,7 @@ class xISSNRequest(WorldCatRequest):
         self.url = 'http://xissn.worldcat.org/webservices/xid/issn/%s' \
             % self.rec_num
 
-class xISBNRequest(WorldCatRequest):
+class xISBNRequest(xIDRequest):
     """request.xisbn.xISBNRequest: Class for xISBN requests
 
     Other request methods to the xISBN API have not yet been implemented
