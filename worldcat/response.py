@@ -12,13 +12,13 @@ class WorldCatResponse(object):
         self.eval = False
         self.response_type = _r.__class__.__name__
         
-    def safe_eval(self, _type=dict):
-        """Only eval a response if """
-        if isinstance(self.data, _type):
+    def safe_eval(self, _obj=dict):
+        """Only eval a response if self.data is an instance of _obj"""
+        if isinstance(self.data, _obj):
             self.data = eval(self.data)
             self.eval = True
         else:
-            warnings.warn("Response is not an instance of %s" % _type,
+            warnings.warn("Response is not an instance of %s" % _obj,
                             RuntimeWarning)
 
 class SearchAPIResponse(WorldCatResponse):
