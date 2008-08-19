@@ -68,7 +68,7 @@ class xISSNRequest(xIDRequest):
     def api_url(self):
         self.url = 'http://xissn.worldcat.org/webservices/xid/issn/%s' \
             % self.rec_num
-
+            
 class xISBNRequest(xIDRequest):
     """request.xisbn.xISBNRequest: Class for xISBN requests
 
@@ -81,9 +81,25 @@ class xISBNRequest(xIDRequest):
         self._validators = {
             'method': ('to10', 'to13', 'fixChecksum',
                         'getMetadata', 'getEditions'),
-            'format': ('xml', 'html', 'json', 'python', 'ruby', 'text', 'csv')
+            'format': ('xml', 'html', 'json', 'python', 'ruby', 'txt', 'csv')
             }
 
     def api_url(self):
         self.url = 'http://xisbn.worldcat.org/webservices/xid/isbn/%s' \
+            % self.rec_num
+            
+class xOCLCNUMRequest(xIDRequest):
+    """request.xisbn.xOCLCNUMRequest: Class for xOCLCNUM requests
+
+    """
+    def __init__(self, rec_num=None, **kwargs):
+        """Constructor method for xISBNRequests."""
+        xIDRequest.__init__(self, rec_num, **kwargs)
+        self._validators = {
+            'method': ('getVariants', 'getMetadata', 'getEditions'),
+            'format': ('xml', 'html', 'json', 'python', 'ruby', 'txt', 'csv')
+            }
+
+    def api_url(self):
+        self.url = 'http://xisbn.worldcat.org/webservices/xid/oclcnum/%s' \
             % self.rec_num
