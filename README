@@ -1,0 +1,41 @@
+DESCRIPTION
+-----------
+
+worldcat is a Python module that works with OCLC's WorldCat Affiliate web
+services (see <http://www.worldcat.org/affiliate/>). worldcat currently works
+with the WorldCat Search, xISBN, xISSN, and xOCLCNUM APIs.
+
+Requests to the WorldCat Search API key require an API key provided by OCLC
+(see <http://www.worldcat.org/affiliate/tools?atype=wcapi>).
+
+INSTALLATION
+------------
+
+You can use easy_install to install worldcat:
+    
+    easy_install worldcat
+    
+If you prefer, you can checkout the latest version of the source using
+Subversion:
+
+    svn co http://svn.matienzo.org/public/python/worldcat/trunk/
+    
+To install:
+
+    python setup.py install
+
+TODO
+----
+
+- Develop test suite
+- Write documentation
+
+LICENSE
+-------
+
+GPL 
+
+AUTHORS
+-------
+
+Mark A. Matienzo <mark@matienzo.org>
