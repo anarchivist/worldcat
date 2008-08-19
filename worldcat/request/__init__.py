@@ -1,4 +1,21 @@
-"request.py - Request classes for WorldCat API module"
+# Copyright (C) 2008 Mark A. Matienzo
+# 
+# This file is part of worldcat, the Python WorldCat API module.
+# 
+# worldcat is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# worldcat is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with wo.  If not, see <http://www.gnu.org/licenses/>.
+
+# request/__init__.py - Base request classes for WorldCat APIs
 
 import urllib
 import urllib2
@@ -31,20 +48,34 @@ class WorldCatRequest(object):
         pass
         
     def get_response(self):
-        """Dummy method to get response; should be overrriden by subclasses"""
+        """Dummy method to get response; should be overrriden by subclasses.
+        
+        Subclass get_response methods should override this method in part as
+        they should return the relevant subclass of WorldCatResponse.
+        """
         self.http_get()
         return WorldCatResponse(self)
         
     def http_get(self):
-        """HTTP Get method for all WorldCatRequests.
-        
-        Should be called by as separate get method."""
+        """HTTP Get method for all WorldCatRequests."""
         self.api_url()
         _query_url = '%s?%s' % (self.url, urllib.urlencode(self.args))
         self.response = urllib2.urlopen(_query_url).read()
         
     def subclass_validator(self, quiet):
-        """Dummy validator method; should be overriden by subclasses."""
+        """Dummy validator method; should be overriden by subclasses.
+        
+        Subclasses should use the subclass_validator method to perform
+        any validation that doesn't rely on the _validators dict object, e.g.:
+        
+        class WCSubClass(WorldCatRequest):
+            def __init__ ...
+            def validate(self):
+                if 'argument' not in self.args:
+                    raise MissingArgException
+                elif self.args['argument'] == 'quux':
+                    raise QuuxException
+        """
         pass
         
     def validate(self, quiet=False):
@@ -52,23 +83,10 @@ class WorldCatRequest(object):
 
            Validators are specified as dicts with arguments as keys,
            associated with tuples of valid values.
+            
+           The validate method should be called before the get_response
+           method.
            
-           Validator methods should be called before get methods.
-           
-           Subclasses should perform any non-dict validation before passing
-           off to WorldCatRequest.validate(), e.g.:
-           
-            class WCSubClass(WorldCatRequest):
-                def __init__ ...
-                def get ...
-                def validate(self):
-                    if 'argument' not in self.args:
-                        raise MissingArgException
-                    elif self.args['argument'] != 'quux':
-                        raise NonQuuxException
-                    else:
-                        WorldCatRequest.validate(self)
-        
         """
         subvalid = self.subclass_validator(quiet)
         for key in self._validators:

@@ -1,3 +1,22 @@
+# Copyright (C) 2008 Mark A. Matienzo
+# 
+# This file is part of worldcat, the Python WorldCat API module.
+# 
+# worldcat is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# worldcat is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with worldcat.  If not, see <http://www.gnu.org/licenses/>.
+
+# request/search.py -- Request objects for WorldCat Search API
+
 from worldcat.request import WorldCatRequest
 from worldcat.response import SearchAPIResponse
 
@@ -89,6 +108,7 @@ class ContentRequest(SearchAPIRequest):
     
     ContentRequests are always for an individual record number; they must have
     rec_num as a mandatory parameter when an instance is created. 
+    
     """
     def __init__(self, rec_num, **kwargs):
         """Constructor method for ContentRequests."""
@@ -109,7 +129,9 @@ class BibRequest(ContentRequest):
     """request.search.BibRequest: retrieves single bibliographic records
     
     BibRequests only provide SearchAPIResponses where response_format is
-    'xml' and record_format is 'marcxml'."""
+    'xml' and record_format is 'marcxml'.
+    
+    """
     def __init__(self, rec_num=None, **kwargs):
         """Constructor for BibRequests."""
         ContentRequest.__init__(self, rec_num, **kwargs)
