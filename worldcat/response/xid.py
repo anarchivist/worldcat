@@ -15,16 +15,21 @@
 # You should have received a copy of the GNU General Public License
 # along with worldcat.  If not, see <http://www.gnu.org/licenses/>.
 
-# __init__.py - Initialize worldcat module
+# response/xid.py - Response objects for xID API requests
 
-__version__ = '0.0.4'
+from worldcat.response import WorldCatResponse
 
-import worldcat.request
-import worldcat.response
-import worldcat.exceptions
-
-def main():
-	pass
-	
-if __name__ == '__main__':
-	main()
+class xIDResponse(WorldCatResponse):
+    """response.xIDResponse: Response class for xID APIS (xISBN/XISSN)
+    
+    xIDRequests can specify Python objects as a response format. The 
+    xIDRequest constructor method does a sanity check on the response before
+    evaling it into a Python object so arbitrary code is not run.
+    """
+    def __init__(self, _r=None):
+        """docstring for __init__"""
+        WorldCatResponse.__init__(self, _r)
+        self.response_format = _r.args['format']
+        self.method = _r.args['method']
+        if (self.response_format == 'python'):
+            self.safe_eval()

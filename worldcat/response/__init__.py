@@ -15,16 +15,24 @@
 # You should have received a copy of the GNU General Public License
 # along with worldcat.  If not, see <http://www.gnu.org/licenses/>.
 
-# __init__.py - Initialize worldcat module
+# response/__init__.py - Contains response objects for WorldCat API requests
 
-__version__ = '0.0.4'
+import worldcat.util.safeeval
 
-import worldcat.request
-import worldcat.response
-import worldcat.exceptions
-
-def main():
-	pass
-	
-if __name__ == '__main__':
-	main()
+class WorldCatResponse(object):
+    """response.WorldCatResponse: Base class for responses from WorldCat APIs
+    
+    """
+    def __init__(self, _r):
+        """Constructor for WorldCatResponses"""
+        self.data = _r.response
+        self.eval = False
+        self.response_type = _r.__class__.__name__
+        
+    def safe_eval(self):
+        """Only eval a response if self.data is an instance of _obj"""
+        try:
+            self.data = worldcat.util.safeeval.const_eval(self.data)
+            self.eval = True
+        except:
+            warnings.warn("Response is does not eval safely", RuntimeWarning)

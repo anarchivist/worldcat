@@ -18,7 +18,7 @@
 # request/search.py -- Request objects for WorldCat Search API
 
 from worldcat.request import WorldCatRequest
-from worldcat.response import SearchAPIResponse
+from worldcat.response.search import SearchAPIResponse
 
 class SearchAPIRequest(WorldCatRequest):
     """request.search.SearchAPIRequest: base class for all search API requests

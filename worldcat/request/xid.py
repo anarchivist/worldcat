@@ -15,13 +15,29 @@
 # You should have received a copy of the GNU General Public License
 # along with worldcat.  If not, see <http://www.gnu.org/licenses/>.
 
-# request/xid.py -- Request objects for xID APIs (xISBN and xISSN)
+""" worldcat/request/xid.py -- Request objects for xID APIs
+
+    xID APIs as of this writing include xISBN, xISSN, and xOCLCNUM.
+    
+    'Alternate request formats' (such as OpenURL and unAPI) have not been
+    implemented.
+    
+"""
 
 from worldcat.request import WorldCatRequest
-from worldcat.response import xIDResponse
+from worldcat.response.xid import xIDResponse
 
 class xIDRequest(WorldCatRequest):
-    """request.xid.xIDRequest: Base class for requests from xID APIs"""
+    """request.xid.xIDRequest: Base class for requests from xID APIs.
+    
+    All xIDRequests require a record number ('rec_num') to be passed when
+    a class is instantiated. Depending on the request, this will either be
+    an ISBN, an ISSN, or an OCLC record number.
+    
+    xIDRequests by default have their 'method' set as 'getEditions' and their
+    response format set as 'python'.
+    
+    """
     def __init__(self, rec_num=None, **kwargs):
         """Constructor for xIDRequests."""
         if 'method' not in kwargs:
@@ -53,8 +69,16 @@ class xIDRequest(WorldCatRequest):
 class xISSNRequest(xIDRequest):
     """request.xid.xISSNRequest: Class for xISSN requests
     
-    Other request methods to the xISSN API have not yet been implemented
-    (e.g. unAPI). These should be subclasses, probably.
+    For more information on the xISSN API, see
+    <http://xissn.worldcat.org/xissnadmin/doc/api.htm>.
+    
+    Example of an xISSNRequest:
+    
+        >>> from worldcat.request.xid import xISSNRequest
+        >>> x = xISSNRequest(rec_num='1895-104X')
+        >>> x.validate()
+        >>> r = x.get_response()
+    
     """
     def __init__(self, rec_num=None, **kwargs):
         """Constructor method for xISSNRequests."""
@@ -72,8 +96,6 @@ class xISSNRequest(xIDRequest):
 class xISBNRequest(xIDRequest):
     """request.xisbn.xISBNRequest: Class for xISBN requests
 
-    Other request methods to the xISBN API have not yet been implemented
-    (e.g. unAPI). These should be subclasses, probably.
     """
     def __init__(self, rec_num=None, **kwargs):
         """Constructor method for xISBNRequests."""

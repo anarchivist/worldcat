@@ -15,16 +15,4 @@
 # You should have received a copy of the GNU General Public License
 # along with worldcat.  If not, see <http://www.gnu.org/licenses/>.
 
-# __init__.py - Initialize worldcat module
-
-__version__ = '0.0.4'
-
-import worldcat.request
-import worldcat.response
-import worldcat.exceptions
-
-def main():
-	pass
-	
-if __name__ == '__main__':
-	main()
+# util/__init__.py
