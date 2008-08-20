@@ -102,7 +102,7 @@ class SRURequest(SearchAPIRequest):
                 raise EmptyQueryError
         else:
             return True
-                    
+                        
 class ContentRequest(SearchAPIRequest):
     """request.search.ContentRequest: search API content request metaclass
     

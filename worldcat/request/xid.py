@@ -44,6 +44,8 @@ class xIDRequest(WorldCatRequest):
             kwargs['method'] = 'getEditions'
         if 'format' not in kwargs:
             kwargs['format'] = 'python'
+        if 'fl' not in kwargs:
+            kwargs['fl'] = '*'
         WorldCatRequest.__init__(self, **kwargs)
         self.rec_num = rec_num
         

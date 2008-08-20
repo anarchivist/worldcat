@@ -35,4 +35,4 @@ class WorldCatResponse(object):
             self.data = worldcat.util.safeeval.const_eval(self.data)
             self.eval = True
         except:
-            warnings.warn("Response is does not eval safely", RuntimeWarning)
+            warnings.warn("Response does not eval safely", RuntimeWarning)

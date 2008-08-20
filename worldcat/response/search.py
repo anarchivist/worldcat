@@ -20,7 +20,9 @@
 from worldcat.response import WorldCatResponse
 
 class SearchAPIResponse(WorldCatResponse):
-    """response.SearchAPIResponse: Response class for WorldCat Search API"""
+    """response.search.SearchAPIResponse: WorldCat Search API response class
+    
+    """
     def __init__(self, _r=None):
         WorldCatResponse.__init__(self, _r)
         self.response_format = 'xml'

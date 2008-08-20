@@ -13,7 +13,7 @@ Development Status :: 1 - Planning
 
 setup( 
     name = 'worldcat',
-    version = '0.0.3',  # remember to update worldcat/__init__.py on release!
+    version = '0.0.4',  # remember to update worldcat/__init__.py on release!
     url = 'http://svn.matienzo.org/public/python/worldcat',
     author = 'Mark A. Matienzo',
     author_email = 'mark@matienzo.org',

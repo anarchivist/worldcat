@@ -20,11 +20,15 @@
 from worldcat.response import WorldCatResponse
 
 class xIDResponse(WorldCatResponse):
-    """response.xIDResponse: Response class for xID APIS (xISBN/XISSN)
+    """response.xid.xIDResponse: Response class for xID APIs.
     
     xIDRequests can specify Python objects as a response format. The 
-    xIDRequest constructor method does a sanity check on the response before
-    evaling it into a Python object so arbitrary code is not run.
+    xIDRequest constructor accordingly uses worldcat.util.safeeval to
+    determine if the API's response is a valid Python constant object so
+    arbitrary code is not run.
+    
+    xID APIs as of this writing include xISBN, xISSN, and xOCLCNUM.
+    
     """
     def __init__(self, _r=None):
         """docstring for __init__"""
