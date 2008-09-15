@@ -18,8 +18,6 @@
 # util/srumarc.py - Parse SRU response XML into pymarc objects
 
 from cStringIO import StringIO
-from xml.sax import make_parser
-from xml.sax.handler import ContentHandler, feature_namespaces
 
 try:
     import xml.etree.ElementTree as ET  # builtin in Python 2.5
