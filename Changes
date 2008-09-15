@@ -1,0 +1,10 @@
+v0.0.5 Mon Sep 15 17:34:02 EDT 2008
+- Added worldcat.util.extract, which assists in extracting records from SRU
+  requests. This module adds a dependency on Pymarc >= 1.2 because of
+  worldcat.util.extract.pymarc_extract(). In addition, we may want to switch
+  its use of StringIO to use an InputSource object instead.
+
+- Added a Changes file :)
+
+v0.0.4 Tue Aug 19 22:28 EDT 2008
+- Initial public release

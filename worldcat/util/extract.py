@@ -17,6 +17,7 @@
 
 # util/srumarc.py - Parse SRU response XML into pymarc objects
 
+from cStringIO import StringIO
 from xml.sax import make_parser
 from xml.sax.handler import ContentHandler, feature_namespaces
 
@@ -29,30 +30,25 @@ import pymarc
 
 from worldcat.exceptions import ExtractError
 
-def parse_xml_string(xml_string, handler):
-    """comparable function to pymarc's parse_xml; push to pymarc eventually"""
-    parser = make_parser()
-    parser.setContentHandler(handler)
-    parser.setFeature(feature_namespaces, 1)
-    parser.parseString(xml_string)
-
-def ns_extract(xml, element='{http://www.loc.gov/MARC21/slim}record',
-                return_as='string'):
-    """worldcat.util.ns_extract: extract elements based on namespace"""
+def extract_elements(xml, element='{http://www.loc.gov/MARC21/slim}record'):
+    """worldcat.util.ns_extract: extract elements based on namespace
+    
+    This function will probably prove useful to anyone using SRURequests.
+    """
     tree = ET.fromstring(xml)
-    elements = tree.getiterator(element)
-    records = [ET.tostring(record) for record in extracted]
-    if return_as is 'string':
-        return ''.join(records)
-    elif return_as is 'string_list':
-        return records
-    elif return_as is 'element_list':
-        return elements
-    else:
-        raise ExtractError("Can't extract to format %s" % return_as)
+    return tree.getiterator(element)
 
 def pymarc_extract(xml):
-    records = ns_extract(xml)
+    """worldcat.util.pymarc_extract: extract records to pymarc Record objects
+    
+    Requires pymarc >= 1.2. StringIO is used since xml.sax.XMLReader's
+    parse objects (which pymarc.marcxml.parse_xml uses) expect a filename, a
+    file-like object, or an InputSource object. 
+    """
+    pymarc_records = []
+    records = extract_elements(xml)
     handler = pymarc.XmlHandler()
-    parse_xml_string(records, handler)
-    return handler.records
+    for record in records:
+        pymarc.parse_xml(StringIO(ET.tostring(record)), handler)
+        pymarc_records.extend(handler.records)
+    return pymarc_records
