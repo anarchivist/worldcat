@@ -17,6 +17,15 @@
 
 # exceptions.py - Errors for WorldCat API module
 
+class ExtractError(Exception):
+    """exceptions.ExtractError: Exceptions for worldcat.util.extract
+    """
+    def __init__(self, msg):
+        self.msg = msg
+    
+    def __str__(self):
+        return self.msg
+
 class WorldCatAPIError(Exception):
     """exceptions.WorldCatAPIError: Base class for all WorldCat API exceptions
     
