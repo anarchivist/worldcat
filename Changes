@@ -1,3 +1,7 @@
+v0.0.6 Tue Sep 16 17:56:37 EDT 2008
+- Fix in worldcat.util.extract.pymarc_extract where the XML handlers grew
+  uncontrollably
+
 v0.0.5 Mon Sep 15 17:34:02 EDT 2008
 - Added worldcat.util.extract, which assists in extracting records from SRU
   requests. This module adds a dependency on Pymarc >= 1.2 because of

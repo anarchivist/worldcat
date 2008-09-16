@@ -45,8 +45,8 @@ def pymarc_extract(xml):
     """
     pymarc_records = []
     records = extract_elements(xml)
-    handler = pymarc.XmlHandler()
     for record in records:
+        handler = pymarc.XmlHandler()
         pymarc.parse_xml(StringIO(ET.tostring(record)), handler)
         pymarc_records.extend(handler.records)
     return pymarc_records
