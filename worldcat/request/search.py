@@ -17,8 +17,12 @@
 
 # request/search.py -- Request objects for WorldCat Search API
 
+import urllib2
+from exceptions import StopIteration
+
 from worldcat.request import WorldCatRequest
 from worldcat.response.search import SearchAPIResponse
+from worldcat.util.extract import extract_elements
 
 class SearchAPIRequest(WorldCatRequest):
     """request.search.SearchAPIRequest: base class for all search API requests
@@ -41,7 +45,7 @@ class SearchAPIRequest(WorldCatRequest):
                                 'info:srw/schema/1/dc-v1.1'),
             'format': ('atom','rss')
         }
-
+    
     def get_response(self):
         """Get method for SearchAPIRequests.
         
@@ -65,10 +69,28 @@ class OpenSearchRequest(SearchAPIRequest):
     def __init__(self, **kwargs):
         """Constructor for OpenSearch requests"""
         SearchAPIRequest.__init__(self, **kwargs)
+
+    def __iter__(self):
+        return self
         
     def api_url(self):
         """API ase URL method for OpenSearchRequests."""
         self.url = 'http://worldcat.org/webservices/catalog/search/opensearch'
+    
+    def next(self):
+        _i = extract_elements(self.response,
+                element='{http://a9.com/-/spec/opensearch/1.1/}startIndex')
+        _p = extract_elements(self.response,
+                element='{http://a9.com/-/spec/opensearch/1.1/}itemsPerPage')
+        _t = extract_elements(self.response,
+                element='{http://a9.com/-/spec/opensearch/1.1/}totalResults')
+        try:
+            if int(_t[0].text) > (int(_i[0].text) + int(_p[0].text)):
+                self.args['start'] = int(_i[0].text) + int(_p[0].text)
+            else:                  
+                raise StopIteration
+        except ValueError:
+            raise StopIteration
         
     def subclass_validator(self, quiet=False):
         """Validator method for OpenSearchRequests."""
@@ -80,7 +102,6 @@ class OpenSearchRequest(SearchAPIRequest):
         else:
             return True
 
-
 class SRURequest(SearchAPIRequest):
     """request.search.SRURequest: queries search API using SRU
     
@@ -90,8 +111,22 @@ class SRURequest(SearchAPIRequest):
         """Constructor method for SRURequests."""
         SearchAPIRequest.__init__(self, **kwargs)
 
+    def __iter__(self):
+        return self
+
     def api_url(self):
         self.url = 'http://worldcat.org/webservices/catalog/search/sru'
+    
+    def next(self):
+        _i = extract_elements(self.response,
+                element='{http://www.loc.gov/zing/srw/}nextRecordPosition')
+        if len(_i) != 0:
+            if _i[0].text is not None:
+                self.args['startRecord'] = int(_i[0].text)
+            else:
+                raise StopIteration
+        else:
+            raise StopIteration
 
     def subclass_validator(self, quiet=False):
         """Validator method for SRURequests."""

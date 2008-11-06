@@ -18,12 +18,14 @@
 # response/search.py - Response objects for WorldCat Search API requests
 
 from worldcat.response import WorldCatResponse
+from worldcat.util.extract import extract_elements
 
 class SearchAPIResponse(WorldCatResponse):
     """response.search.SearchAPIResponse: WorldCat Search API response class
     
     """
     def __init__(self, _r=None):
+        """Constructor for SearchAPIResponses"""
         WorldCatResponse.__init__(self, _r)
         self.response_format = 'xml'
         if self.response_type == 'HoldingsRequest':
@@ -32,7 +34,7 @@ class SearchAPIResponse(WorldCatResponse):
             if self.response_type == 'CitationRequest':
                 self.response_format = 'html'
             elif 'format' in _r.args:
-                self.record_format =_r.args['format']
+                self.record_format = _r.args['format']
             else:
                 self.record_format = 'atom'
         elif self.response_type in ('BibRequest', 'SRURequest'):

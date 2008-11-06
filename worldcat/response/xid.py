@@ -31,7 +31,7 @@ class xIDResponse(WorldCatResponse):
     
     """
     def __init__(self, _r=None):
-        """docstring for __init__"""
+        """Constructor for xIDResponses"""
         WorldCatResponse.__init__(self, _r)
         self.response_format = _r.args['format']
         self.method = _r.args['method']

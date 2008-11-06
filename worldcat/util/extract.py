@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with worldcat.  If not, see <http://www.gnu.org/licenses/>.
 
-# util/srumarc.py - Parse SRU response XML into pymarc objects
+# util/extract.py - Extract elements based upon namespaces
 
 from cStringIO import StringIO
 
@@ -29,7 +29,7 @@ import pymarc
 from worldcat.exceptions import ExtractError
 
 def extract_elements(xml, element='{http://www.loc.gov/MARC21/slim}record'):
-    """worldcat.util.ns_extract: extract elements based on namespace
+    """worldcat.util.extract_elements: extract elements based on namespace
     
     This function will probably prove useful to anyone using SRURequests.
     """
