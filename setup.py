@@ -8,7 +8,7 @@ Intended Audience :: Developers
 Intended Audience :: Information Technology
 License :: OSI Approved :: GNU General Public License (GPL)
 Programming Language :: Python
-Development Status :: 1 - Planning
+Development Status :: 3 - Alpha 
 """
 
 setup( 
