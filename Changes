@@ -1,3 +1,7 @@
+v0.1.1 Thu Nov  6 11:37:58 EST 2008
+- Added LCCN support in worldcat.request.xid and other updates based upon
+  http://worldcat.org/devnet/blog/2008/11/lccn_support_and_other_improve.html
+
 v0.1.0 Thu Nov  6 01:05:50 EST 2008
 - Added iterators to SRURequest and OpenSearchRequest in worldcat.request.search.
   These need testing, so please submit any feedback.

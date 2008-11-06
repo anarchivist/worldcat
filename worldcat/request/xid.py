@@ -88,7 +88,8 @@ class xISSNRequest(xIDRequest):
         self._validators = {
             'method': ('getForms', 'getHistory', 'fixChecksum',
                         'getMetadata', 'getEditions'),
-            'format': ('xml', 'html', 'json', 'python', 'ruby')
+            'format': ('xml', 'html', 'json', 'python',
+                        'ruby', 'text', 'csv', 'php')
             }
         
     def api_url(self):
@@ -105,11 +106,29 @@ class xISBNRequest(xIDRequest):
         self._validators = {
             'method': ('to10', 'to13', 'fixChecksum',
                         'getMetadata', 'getEditions'),
-            'format': ('xml', 'html', 'json', 'python', 'ruby', 'txt', 'csv')
+            'format': ('xml', 'html', 'json', 'python',
+                        'ruby', 'txt', 'csv', 'php')
             }
 
     def api_url(self):
         self.url = 'http://xisbn.worldcat.org/webservices/xid/isbn/%s' \
+            % self.rec_num
+            
+class xLCCNRequest(xIDRequest):
+    """request.xisbn.xLCCNRequest: Class for xID LCCN requests
+
+    """
+    def __init__(self, rec_num=None, **kwargs):
+        """Constructor method for xISBNRequests."""
+        xIDRequest.__init__(self, rec_num, **kwargs)
+        self._validators = {
+            'method': ('getVariants', 'getMetadata', 'getEditions'),
+            'format': ('xml', 'html', 'json', 'python',
+                        'ruby', 'txt', 'csv', 'php')
+            }
+
+    def api_url(self):
+        self.url = 'http://xisbn.worldcat.org/webservices/xid/lccn/%s' \
             % self.rec_num
             
 class xOCLCNUMRequest(xIDRequest):
@@ -121,7 +140,8 @@ class xOCLCNUMRequest(xIDRequest):
         xIDRequest.__init__(self, rec_num, **kwargs)
         self._validators = {
             'method': ('getVariants', 'getMetadata', 'getEditions'),
-            'format': ('xml', 'html', 'json', 'python', 'ruby', 'txt', 'csv')
+            'format': ('xml', 'html', 'json', 'python',
+                        'ruby', 'txt', 'csv', 'php')
             }
 
     def api_url(self):
