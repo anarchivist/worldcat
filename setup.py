@@ -6,6 +6,7 @@ classifiers = """
 Intended Audience :: Education
 Intended Audience :: Developers
 Intended Audience :: Information Technology
+License :: OSI Approved :: BSD License
 License :: OSI Approved :: GNU General Public License (GPL)
 Programming Language :: Python
 Development Status :: 3 - Alpha 
@@ -13,7 +14,7 @@ Development Status :: 3 - Alpha
 
 setup( 
     name = 'worldcat',
-    version = '0.1.1',  # remember to update worldcat/__init__.py on release!
+    version = '0.1.2',  # remember to update worldcat/__init__.py on release!
     url = 'http://matienzo.org/project/worldcat',
     author = 'Mark A. Matienzo',
     author_email = 'mark@matienzo.org',
