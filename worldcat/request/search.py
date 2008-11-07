@@ -190,8 +190,7 @@ class CitationRequest(ContentRequest):
         """Get method for CitationRequests."""
         self.url = \
             'http://worldcat.org/webservices/catalog/content/citations/%s' \
-            % rec_num
-        return SearchAPIRequest.get(self)
+            % self.rec_num
 
 class HoldingsRequest(ContentRequest):
     """request.search.HoldingsRequest: retrieves holdings for a single record
