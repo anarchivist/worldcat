@@ -18,7 +18,7 @@ setup(
     url = 'http://matienzo.org/project/worldcat',
     author = 'Mark A. Matienzo',
     author_email = 'mark@matienzo.org',
-    license = 'GPL',
+    license = 'GPL/BSD',
     packages = find_packages(),
     install_requires = install_requires,
     description = 'Interact with OCLC\'s WorldCat Search and xID APIs',
