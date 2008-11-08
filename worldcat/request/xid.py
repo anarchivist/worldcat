@@ -24,6 +24,7 @@
     
 """
 
+from worldcat.exceptions import EmptyRecordNumberError
 from worldcat.request import WorldCatRequest
 from worldcat.response.xid import xIDResponse
 

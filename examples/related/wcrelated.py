@@ -1,17 +1,22 @@
-"""find related things in worldcat by oclcnumber"""
+"""
+find related things in worldcat by oclcnumber
+mark matienzo 2008
+
+dependencies: web.py, pymarc, worldcat
+
+to run: python wcrelated.py
+point your web browser at http://localhost:8080/
+"""
 from worldcat.request.search import BibRequest, CitationRequest, SRURequest
 from worldcat.util.extract import extract_elements, pymarc_extract
 
 import web
 
-import os
-import sys
-
 urls = ('/', 'index', '/related/(.*)', 'related', '/related', 'related')
 render = web.template.render('templates/')
-WSKEY = sys.argv[1]
+WSKEY = 'YOUR API KEY'
 
-def get_eds(oclcnum):
+def get_related(oclcnum):
     bib = BibRequest(wskey=WSKEY, rec_num=oclcnum).get_response()
     record = pymarc_extract(bib.data)
     subjects = []
@@ -55,13 +60,13 @@ class related:
     def GET(self, oclcnum):
         numcite = CitationRequest(wskey=WSKEY, rec_num=oclcnum).get_response().data
         print render.related(oclcnum=oclcnum, numcite=numcite,
-                                response=get_eds(oclcnum))
+                                response=get_related(oclcnum))
     
     def POST(self):
         oclcnum = web.input().oclcnum
         numcite = CitationRequest(wskey=WSKEY, rec_num=oclcnum).get_response().data
         print render.related(oclcnum=oclcnum, numcite=numcite,
-                                response=get_eds(oclcnum))
+                                response=get_related(oclcnum))
 
 web.webapi.internalerror = web.debugerror
 if __name__ == '__main__':

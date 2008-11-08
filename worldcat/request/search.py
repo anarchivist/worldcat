@@ -20,6 +20,9 @@
 import urllib2
 from exceptions import StopIteration
 
+from worldcat.exceptions import APIKeyError, APIKeyNotSpecifiedError, \
+                                EmptyQueryError, EmptyRecordNumberError, \
+                                InvalidArgumentError, ExtractError
 from worldcat.request import WorldCatRequest
 from worldcat.response.search import SearchAPIResponse
 from worldcat.util.extract import extract_elements
