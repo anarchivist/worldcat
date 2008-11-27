@@ -195,8 +195,8 @@ class CitationRequest(ContentRequest):
             'http://worldcat.org/webservices/catalog/content/citations/%s' \
             % self.rec_num
 
-class HoldingsRequest(ContentRequest):
-    """request.search.HoldingsRequest: retrieves holdings for a single record
+class LibrariesRequest(ContentRequest):
+    """request.search.LibrariesRequest: retrieves holdings for a single record
     
     HoldingsRequests universally going to have a SearchAPIResponse where
     response_format is 'xml' and record_format is 'iso20775'.
@@ -211,9 +211,12 @@ class HoldingsRequest(ContentRequest):
         
     def api_url(self):
         """Get method for HoldingsRequests."""
-        self.url = \
-            'http://worldcat.org/webservices/catalog/content/libraries/%s%s' \
-            % (NUM_TYPES.get(self._nt_validator), self.rec_num)
+        if self.rec_num is None:
+            self.url = 'http://worldcat.org/webservices/catalog/content/libraries'
+        else:
+            self.url = \
+                'http://worldcat.org/webservices/catalog/content/libraries/%s%s' \
+                % (NUM_TYPES.get(self._nt_validator), self.rec_num)
 
     def subclass_validator(self, quiet=False):
         """Validator method for HoldingsRequests.

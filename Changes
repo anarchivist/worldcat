@@ -1,3 +1,12 @@
+v0.2.0 Thu Nov 27 15:57:25 EST 2008
+- The following changes anticipated changes to the WorldCat Search APIs 
+  that will be active on December 7, 2008.
+- THIS MAY BREAK YOUR CODE: worldcat.request.search.HoldingsRequest has been
+  renamed worldcat.request.search.LibrariesRequest. This class also allows you
+  to retrieve a list of nearby libraries.
+- Any request that will return citations now supports the cformat parameter set
+  to "all."
+
 v0.1.4 Sat Nov  8 10:13:50 EST 2008
 - Bug fix where exceptions weren't imported into worldcat.request.search and 
   worldcat.request.xid
