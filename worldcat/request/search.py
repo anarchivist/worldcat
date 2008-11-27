@@ -43,7 +43,7 @@ class SearchAPIRequest(WorldCatRequest):
         WorldCatRequest.__init__(self, **kwargs)
         self._validators = {
             'servicelevel': ('default', 'full'),
-            'cformat': ('apa', 'chicago', 'harvard', 'mla', 'turabian'),
+            'cformat': ('apa', 'chicago', 'harvard', 'mla', 'turabian', 'all'),
             'recordSchema': ('info:srw/schema/1/marcxml-v1.1',
                                 'info:srw/schema/1/dc-v1.1'),
             'format': ('atom','rss')
@@ -200,6 +200,8 @@ class HoldingsRequest(ContentRequest):
     
     HoldingsRequests universally going to have a SearchAPIResponse where
     response_format is 'xml' and record_format is 'iso20775'.
+    
+    TODO: Add code to allow request w/o recnum to retrieve based on OCLC symbol
     """
     def __init__(self, rec_num=None, num_type='oclc', **kwargs):
         """Constructor for HoldingsRequests."""
