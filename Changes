@@ -1,6 +1,6 @@
-v0.2.0 Thu Nov 27 15:57:25 EST 2008
-- The following changes anticipated changes to the WorldCat Search APIs 
-  that will be active on December 7, 2008.
+v0.2.0 Sun Dec 14 23:08:04 EST 2008
+- The following changes implement the changes to the WorldCat Search APIs 
+  that were made on December 7, 2008.
 - THIS MAY BREAK YOUR CODE: worldcat.request.search.HoldingsRequest has been
   renamed worldcat.request.search.LibrariesRequest. This class also allows you
   to retrieve a list of nearby libraries.
