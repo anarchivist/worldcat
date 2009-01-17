@@ -216,7 +216,7 @@ class LibrariesRequest(ContentRequest):
         else:
             self.url = \
                 'http://worldcat.org/webservices/catalog/content/libraries/%s%s' \
-                % (NUM_TYPES.get(self._nt_validator), self.rec_num)
+                % (self._nt_validator[self.num_type], self.rec_num)
 
     def subclass_validator(self, quiet=False):
         """Validator method for HoldingsRequests.

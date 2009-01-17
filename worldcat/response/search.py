@@ -28,7 +28,7 @@ class SearchAPIResponse(WorldCatResponse):
         """Constructor for SearchAPIResponses"""
         WorldCatResponse.__init__(self, _r)
         self.response_format = 'xml'
-        if self.response_type == 'HoldingsRequest':
+        if self.response_type == 'LibrariesRequest':
             self.record_format = 'iso20775'
         elif self.response_type in ('OpenSearchRequest', 'CitationRequest'):
             if self.response_type == 'CitationRequest':
