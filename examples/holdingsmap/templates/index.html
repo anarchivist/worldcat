@@ -1,11 +1,11 @@
-$def with (gmapkey)
+$def with (rdata)
 <html>
   <head>
     <title>Holding libraries</title>
     <link rel="stylesheet" href="http://matienzo.org/sites/all/themes/blueprint/css/style.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
     <script src="http://static.simile.mit.edu/exhibit/api-2.0/exhibit-api.js"
             type="text/javascript"></script>
-    <script src="http://static.simile.mit.edu/exhibit/extensions-2.0/map/map-extension.js?gmapkey=$gmapkey"
+    <script src="http://static.simile.mit.edu/exhibit/extensions-2.0/map/map-extension.js?gmapkey=$rdata['key']"
             type="text/javascript"></script>
   </head> 
   <body>
@@ -15,11 +15,11 @@ $def with (gmapkey)
         <div style="margin-bottom: 5%">
             <h2>Search for an OCLC number's holdings</h2>
             <form method="post" action="/locations">
-            <p><input type="text" name="oclcnum"/><input type="submit" value="Search"/></p>
+            <p><label for="ox">OCLC number</label><input type="text" name="oclcnum" size="12" id="ox"/><br/><label for="zx">ZIP code</label><input type="text" name="zip" size="7" id="zx"/><input type="submit" value="Search"/></p>
             </form>
         </div>
       </div>
-      <div ex:role="view" ex:viewClass="Map" ex:latlng=".addressLatLng" style="float: left; width: 70%;" ex:mapHeight="400" ex:center="40.77,-73.98" ex:zoom="10"></div>
+      <div ex:role="view" ex:viewClass="Map" ex:latlng=".addressLatLng" style="float: left; width: 70%;" ex:mapHeight="400" ex:center="$rdata['ctr'][0],$rdata['ctr'][1]" ex:zoom="10" ex:scaleControl="true"></div>
     </div>
   </body>
 </html>
