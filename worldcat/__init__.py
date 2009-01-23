@@ -1,4 +1,4 @@
-# Copyright (C) 2008 Mark A. Matienzo
+# Copyright (C) 2008-2009 Mark A. Matienzo
 # 
 # This file is part of worldcat, the Python WorldCat API module.
 # 
@@ -17,7 +17,7 @@
 
 # __init__.py - Initialize worldcat module
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 import worldcat.request
 import worldcat.response

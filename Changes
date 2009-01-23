@@ -1,4 +1,10 @@
-v0.2.1 Fri Jan 16 Sat Jan 17 03:53:28 EST 2009
+v0.2.2 Fri Jan 23 01:51:53 EST 2009
+- added some basic registry request code in worldcat.request.registry and
+  worldcat.response.registry; needs testing. Only available so far is a lookup
+  by OCLC symbol.
+- updated copyright statements
+  
+v0.2.1 Sat Jan 17 03:53:28 EST 2009
 - minor bug fix to worldcat.response.search
 - added new "holdingsmap" prototype to examples
 
@@ -31,7 +37,6 @@ v0.1.1 Thu Nov  6 11:37:58 EST 2008
 v0.1.0 Thu Nov  6 01:05:50 EST 2008
 - Added iterators to SRURequest and OpenSearchRequest in
   worldcat.request.search These need testing, so please submit any feedback.
-  
 - Correcting, adding, and cleaning up docstrings
 
 v0.0.6 Tue Sep 16 17:56:37 EDT 2008
@@ -43,7 +48,6 @@ v0.0.5 Mon Sep 15 17:34:02 EDT 2008
   requests. This module adds a dependency on Pymarc >= 1.2 because of
   worldcat.util.extract.pymarc_extract(). In addition, we may want to switch
   its use of StringIO to use an InputSource object instead.
-
 - Added a Changes file :)
 
 v0.0.4 Tue Aug 19 22:28 EDT 2008

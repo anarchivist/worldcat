@@ -15,4 +15,16 @@
 # You should have received a copy of the GNU General Public License
 # along with worldcat.  If not, see <http://www.gnu.org/licenses/>.
 
-# util/__init__.py
+# response/registry.py - Response objects for WorldCat Registry requests
+
+from worldcat.response import WorldCatResponse
+
+class RegistryResponse(WorldCatResponse):
+    """response.registry.RegistryResponse: Response class for Registry data"""
+    
+    def __init__(self, _r=None):
+        """Constructor for xIDResponses"""
+        WorldCatResponse.__init__(self, _r)
+        self.response_format = 'xml'
+        self.record_format = 'registry'
+        self.service_label = _r.args['serviceLabel']

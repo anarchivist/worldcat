@@ -3,7 +3,8 @@ DESCRIPTION
 
 worldcat is a Python module that works with OCLC's WorldCat Affiliate web
 services (see <http://www.worldcat.org/affiliate/>). worldcat currently works
-with the WorldCat Search and xID (xISBN, xISSN, and xOCLCNUM) APIs.
+with the WorldCat Search API, the xID (xISBN, xISSN, and xOCLCNUM) APIs, and
+lookups using the WorldCat Registry API.
 
 Requests to the WorldCat Search API key require an API key provided by OCLC
 (see <http://www.worldcat.org/affiliate/tools?atype=wcapi>).
@@ -29,8 +30,8 @@ TODO
 
 - Develop test suite
 - Write detailed documentation
-- Add support for WorldCat Identities, Terminologies Services, Metadata Crosswalk
-  Services, and WorldCat Registry Search
+- Add support for WorldCat Identities, Terminologies Services, Metadata 
+  Crosswalk Services, and WorldCat Registry Search
 
 LICENSE
 -------
