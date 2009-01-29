@@ -31,8 +31,8 @@ class QGoogleGC(gc.Google):
         dispatch = getattr(self, 'parse_' + self.output_format)
         return dispatch(page, exactly_one)
 
-WSKEY = 'YOUR WORLDCAT API KEY'
-GMAPKEY = 'YOUR GOOGLE MAPS API KEY'
+WSKEY = 'AHWK6qmBGPF3DS2SWZ4r2g79DXgL7McqEDvPpCS1TCq6D72kWElEP1Ql2jRiRVc96Ogiq6nweHfMDoCT'
+GMAPKEY = 'ABQIAAAAO4inKKBbkm8WiigSm3owFhRUagksgmWq5Dx1LeomZOA9EaHM9BQMyWUDeWJy5fko6DaKcsSv_5xv3w'
 
 XPATHS = {
     'lat': '{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}nameLocation/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}mainAddress/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}latitude',
@@ -126,8 +126,9 @@ class locations:
         rdata['others'] = []
         try:
             for _ in o['list']:
-                rdata['others'].extend(_['oclcnum'])
-            rdata['others'].remove(rdata['oclcnum'])
+                if _.has_key('presentOclcnum') is False \
+                    and _['oclcnum'][0] not in _['oclcnum']:
+                    rdata['others'].extend(_['oclcnum'])
         except:
             pass
 	    c, (lat, lon) = gcoder.geocode(rdata['zip'])
@@ -143,10 +144,9 @@ class locations:
         rdata['others'] = []
         try:
             for _ in o['list']:
-                if _.has_key('presentOclcnum') is False and _['oclcnum'][0] not in _['oclcnum']:
+                if _.has_key('presentOclcnum') is False \
+                    and _['oclcnum'][0] not in _['oclcnum']:
                     rdata['others'].extend(_['oclcnum'])
-            #rdata['others'].remove(rdata['oclcnum'])
-            #print rdata['others']
         except:
             pass
 	    c, (lat, lon) = gcoder.geocode(rdata['zip'])
