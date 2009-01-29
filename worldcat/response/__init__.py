@@ -17,6 +17,7 @@
 
 # response/__init__.py - Contains response objects for WorldCat API requests
 
+import warnings
 import worldcat.util.safeeval
 
 class WorldCatResponse(object):

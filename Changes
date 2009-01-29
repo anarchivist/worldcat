@@ -1,3 +1,10 @@
+v0.2.3 Thu Jan 29 04:30:15 EST 2009
+- Py2.6-specific bug fixes in worldcat.util.safeeval  and
+  worldcat.response.__init__
+- modified holdingsmap example to use registry requests, multiprocessing
+  (for the json tidbit), and for compatibility with web.py 0.3
+- also suppressing variant works stuff in holdings map - useless...?
+
 v0.2.2 Fri Jan 23 01:51:53 EST 2009
 - added some basic registry request code in worldcat.request.registry and
   worldcat.response.registry; needs testing. Only available so far is a lookup

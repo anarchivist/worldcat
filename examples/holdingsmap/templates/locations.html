@@ -24,23 +24,13 @@ $def with (rdata)
       
       <h1>Holding libraries for record <a href="http://www.worldcat.org/oclc/$rdata['oclcnum']">$rdata['oclcnum']</a></h1>
       <div style="float: left; width: 25%; margin-right: 2%;">
-         
-    
         <div style="margin-bottom: 5%">
             <h2>Citation</h2>
             <ul><li>$:rdata['cit']</li></ul>
         </div>
-        <div style="margin-bottom: 5%; ">
-        $if rdata['others'] != []:
-            <h2>Holdings for Variants Of This Item</h2>
-            <ul style="max-height: 200px !important; overflow: auto !important;">
-            $for _ in rdata['others']:
-                    <li><a href="/locations?oclcnum=$_&amp;zip=$rdata['zip']">$_</a></li>
-            </ul>
-        </div>
-         <div style="margin-bottom: 5%">
+        <div style="margin-bottom: 5%">
               <h2>Find holdings for another item</h2>
-              <form method="post" action="/holdingsmap/locations">
+              <form method="post" action="/locations">
               <p><label for="ox">OCLC number</label><input type="text" name="oclcnum" size="12" id="ox"/><br/><label for="zx">ZIP code</label><input type="text" name="zip" size="7" id="zx" value="$rdata['zip']"/><input type="submit" value="Search"/></p>
 	      </form>
           </div>

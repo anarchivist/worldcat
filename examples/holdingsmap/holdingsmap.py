@@ -7,11 +7,15 @@ point your web browser at http://localhost:8080/
 """
 from worldcat.request.search import LibrariesRequest, CitationRequest
 from worldcat.request.xid import xOCLCNUMRequest
+from worldcat.request.registry import OCLCSymbolRequest
 import simplejson
 import web
 from elementtree import ElementTree as ET
 from urllib2 import urlopen, HTTPError
 from geopy import geocoders as gc
+from multiprocessing import Pool
+
+REG_BASE_NS = 'info:rfa/rfaRegistry/xmlSchemas/institution'
 
 class QGoogleGC(gc.Google):
     """subclassing the Google geocoder from geopy because of its
@@ -29,6 +33,13 @@ class QGoogleGC(gc.Google):
 
 WSKEY = 'YOUR WORLDCAT API KEY'
 GMAPKEY = 'YOUR GOOGLE MAPS API KEY'
+
+XPATHS = {
+    'lat': '{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}nameLocation/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}mainAddress/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}latitude',
+    'lng':
+'{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}nameLocation/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}mainAddress/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}longitude',
+}
+
 gcoder = QGoogleGC(GMAPKEY)
 urls = (
         '/', 'index',
@@ -38,10 +49,35 @@ urls = (
         )
 render = web.template.render('templates/')
 
+def process_libraries(result):
+    _ = {}
+    _['oclcid'] = result.findtext('institutionIdentifier/value')
+    _['label'] = result.findtext('physicalLocation')
+    _['type'] = 'library'
+    _['address'] = result.findtext('physicalAddress/text')
+    _['numberOfCopies'] = result.findtext('holdingSimple/copiesSummary/copiesCount')
+    try:
+        _['link'] = result.findtext('electronicAddress/text')
+    except AttributeError:
+        pass
+    try:
+        reginfo = OCLCSymbolRequest(symbol=_['oclcid']).get_response()
+        reginfo = ET.XML(reginfo.data)
+        lat = reginfo.findtext(XPATHS['lat'])
+        if lat is None:
+            c, (lat, lng) = gcoder.geocode(_['address'])
+        else:
+            lng = reginfo.findtext(XPATHS['lng'])
+        _['addressLatLng'] = '%s,%s' % (lat, lng)
+    except ValueError:
+        pass
+    return _
+
+
 class index:
     def GET(self):
         rdata = {'key': GMAPKEY, 'ctr': ('40.77','-73.98')}
-        print render.index(rdata=rdata)
+        return render.index(rdata=rdata)
 
 class json:
     def GET(self):
@@ -51,25 +87,33 @@ class json:
         lookup = LibrariesRequest(wskey=WSKEY, rec_num=args.oclcnum,
                     location=args.zip, maximumLibraries=100).get_response()
         results = ET.XML(lookup.data)
-        for result in results.findall('holding'):
-            _ = {}
-            _['oclcid'] = result.find('institutionIdentifier/value').text
-            _['label'] = result.find('physicalLocation').text
-            _['type'] = 'library'
-            _['address'] = result.find('physicalAddress/text').text
-            _['numberOfCopies'] = result.find('holdingSimple/copiesSummary/copiesCount').text
-            try:
-                _['link'] = result.find('electronicAddress/text').text
-            except AttributeError:
-                pass
-            try:
-                c, (lat, lng) = gcoder.geocode(_['address'])
-                _['addressLatLng'] = '%s,%s' % (lat, lng)
-            except ValueError:
-                pass
-            jsonout['items'].append(_)
+        jsonout['items'] = Pool(processes=20).map(process_libraries, results)
+        # for result in results.findall('holding'):
+        #     _ = {}
+        #     _['oclcid'] = result.find('institutionIdentifier/value').text
+        # 
+        #     _['label'] = result.find('physicalLocation').text
+        #     _['type'] = 'library'
+        #     _['address'] = result.find('physicalAddress/text').text
+        #     _['numberOfCopies'] = result.find('holdingSimple/copiesSummary/copiesCount').text
+        #     try:
+        #         _['link'] = result.find('electronicAddress/text').text
+        #     except AttributeError:
+        #         pass
+        #     try:
+        #         reginfo = OCLCSymbolRequest(symbol=_['oclcid']).get_response()
+        #         reginfo = ET.XML(reginfo.data)
+        #         lat = reginfo.findtext(XPATHS['lat'])
+        #         if lat is None:
+        #             c, (lat, lng) = gcoder.geocode(_['address'])
+        #         else:
+        #             lng = reginfo.findtext(XPATHS['lng'])
+        #         _['addressLatLng'] = '%s,%s' % (lat, lng)
+        #     except ValueError:
+        #         pass
+        #     jsonout['items'].append(_)
         web.header('Content-Type', 'application/json')
-        print simplejson.dumps(jsonout)
+        return simplejson.dumps(jsonout)
 
 class locations:
     def GET(self):
@@ -87,7 +131,7 @@ class locations:
         except:
             pass
 	    c, (lat, lon) = gcoder.geocode(rdata['zip'])
-        print render.locations(rdata=rdata)
+        return render.locations(rdata=rdata)
     
     def POST(self):
     	rdata = web.input(oclcnum=None, zip='11216')
@@ -99,20 +143,22 @@ class locations:
         rdata['others'] = []
         try:
             for _ in o['list']:
-                rdata['others'].extend(_['oclcnum'])
-            rdata['others'].remove(rdata['oclcnum'])
+                if _.has_key('presentOclcnum') is False and _['oclcnum'][0] not in _['oclcnum']:
+                    rdata['others'].extend(_['oclcnum'])
+            #rdata['others'].remove(rdata['oclcnum'])
+            #print rdata['others']
         except:
             pass
 	    c, (lat, lon) = gcoder.geocode(rdata['zip'])
-        print render.locations(rdata=rdata)
+        return render.locations(rdata=rdata)
         
 class history:
     def GET(self, _=None):
-        print '<html><body></body></html>'
+        return '<html><body></body></html>'
 
 def runfcgi_apache(func):
     web.wsgi.runfcgi(func, None)
       
 if __name__ == '__main__':
-    web.wsgi.runwsgi = runfcgi_apache
-    web.run(urls, globals())
+    #web.wsgi.runwsgi = runfcgi_apache
+    web.application(urls, globals()).run()

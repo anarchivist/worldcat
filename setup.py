@@ -14,7 +14,7 @@ Development Status :: 4 - Beta
 
 setup( 
     name = 'worldcat',
-    version = '0.2.2',  # remember to update worldcat/__init__.py on release!
+    version = '0.2.3',  # remember to update worldcat/__init__.py on release!
     url = 'http://matienzo.org/project/worldcat',
     author = 'Mark A. Matienzo',
     author_email = 'mark@matienzo.org',
