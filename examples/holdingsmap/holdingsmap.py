@@ -31,8 +31,8 @@ class QGoogleGC(gc.Google):
         dispatch = getattr(self, 'parse_' + self.output_format)
         return dispatch(page, exactly_one)
 
-WSKEY = 'AHWK6qmBGPF3DS2SWZ4r2g79DXgL7McqEDvPpCS1TCq6D72kWElEP1Ql2jRiRVc96Ogiq6nweHfMDoCT'
-GMAPKEY = 'ABQIAAAAO4inKKBbkm8WiigSm3owFhRUagksgmWq5Dx1LeomZOA9EaHM9BQMyWUDeWJy5fko6DaKcsSv_5xv3w'
+WSKEY = 'YOUR WORLDCAT API KEY'
+GMAPKEY = 'YOUR GOOGLE MAPS API KEY'
 
 XPATHS = {
     'lat': '{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}nameLocation/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}mainAddress/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}latitude',
