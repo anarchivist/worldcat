@@ -17,9 +17,9 @@ You can use easy_install to install worldcat:
     easy_install worldcat
     
 If you prefer, you can checkout the latest version of the source using
-Subversion:
+Mercurial:
 
-    svn co http://svn.matienzo.org/public/python/worldcat/trunk/
+    hg clone https://bitbucket.org/anarchivist/worldcat/
     
 To install:
 
