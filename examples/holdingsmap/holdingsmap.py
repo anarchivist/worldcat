@@ -31,8 +31,8 @@ class QGoogleGC(gc.Google):
         dispatch = getattr(self, 'parse_' + self.output_format)
         return dispatch(page, exactly_one)
 
-WSKEY = 'YOUR WORLDCAT API KEY'
-GMAPKEY = 'YOUR GOOGLE MAPS API KEY'
+WSKEY = 'your worldcat api key'
+GMAPKEY = 'your google maps api key'
 
 XPATHS = {
     'lat': '{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}nameLocation/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}mainAddress/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}latitude',
@@ -45,7 +45,8 @@ urls = (
         '/', 'index',
         '/locations', 'locations',
         '/json', 'json',
-        '/(locations|json)?__history__.html', 'history'
+        '/(locations|json)?__history__.html', 'history',
+        '/(.*)favicon.ico', 'history'
         )
 render = web.template.render('templates/')
 
@@ -88,30 +89,6 @@ class json:
                     location=args.zip, maximumLibraries=100).get_response()
         results = ET.XML(lookup.data)
         jsonout['items'] = Pool(processes=20).map(process_libraries, results)
-        # for result in results.findall('holding'):
-        #     _ = {}
-        #     _['oclcid'] = result.find('institutionIdentifier/value').text
-        # 
-        #     _['label'] = result.find('physicalLocation').text
-        #     _['type'] = 'library'
-        #     _['address'] = result.find('physicalAddress/text').text
-        #     _['numberOfCopies'] = result.find('holdingSimple/copiesSummary/copiesCount').text
-        #     try:
-        #         _['link'] = result.find('electronicAddress/text').text
-        #     except AttributeError:
-        #         pass
-        #     try:
-        #         reginfo = OCLCSymbolRequest(symbol=_['oclcid']).get_response()
-        #         reginfo = ET.XML(reginfo.data)
-        #         lat = reginfo.findtext(XPATHS['lat'])
-        #         if lat is None:
-        #             c, (lat, lng) = gcoder.geocode(_['address'])
-        #         else:
-        #             lng = reginfo.findtext(XPATHS['lng'])
-        #         _['addressLatLng'] = '%s,%s' % (lat, lng)
-        #     except ValueError:
-        #         pass
-        #     jsonout['items'].append(_)
         web.header('Content-Type', 'application/json')
         return simplejson.dumps(jsonout)
 
