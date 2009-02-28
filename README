@@ -7,7 +7,8 @@ with the WorldCat Search API, the xID (xISBN, xISSN, and xOCLCNUM) APIs, and
 lookups using the WorldCat Registry API.
 
 Requests to the WorldCat Search API key require an API key provided by OCLC
-(see <http://www.worldcat.org/affiliate/tools?atype=wcapi>).
+(see <http://www.worldcat.org/affiliate/tools?atype=wcapi>), available to all
+OCLC members at no charge.
 
 INSTALLATION
 ------------
@@ -16,7 +17,7 @@ You can use easy_install to install worldcat:
     
     easy_install worldcat
     
-If you prefer, you can checkout the latest version of the source using
+If you prefer, you can check out the latest version of the source using
 Mercurial:
 
     hg clone https://bitbucket.org/anarchivist/worldcat/
