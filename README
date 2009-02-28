@@ -8,7 +8,8 @@ lookups using the WorldCat Registry API.
 
 Requests to the WorldCat Search API key require an API key provided by OCLC
 (see <http://www.worldcat.org/affiliate/tools?atype=wcapi>), available to all
-OCLC members at no charge.
+OCLC members at no charge. The authors of this module do not endorse the terms
+of use of OCLC APIs nor are liable for any violations of their Terms of Use.
 
 INSTALLATION
 ------------
