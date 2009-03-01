@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-install_requires = []
+install_requires = ['pymarc']
 
 classifiers = """
 Intended Audience :: Education
@@ -21,6 +21,6 @@ setup(
     license = 'GPL/BSD',
     packages = find_packages(),
     install_requires = install_requires,
-    description = 'Interact with OCLC\'s WorldCat Search and xID APIs',
+    description = 'Interact with OCLC\'s WorldCat Affiliate APIs',
     classifiers = filter(None, classifiers.split('\n')),
 )
