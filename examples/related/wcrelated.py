@@ -16,6 +16,7 @@ urls = ('/', 'index', '/related/(.*)', 'related', '/related', 'related')
 render = web.template.render('templates/')
 WSKEY = 'YOUR API KEY'
 
+
 def get_related(oclcnum):
     bib = BibRequest(wskey=WSKEY, rec_num=oclcnum).get_response()
     record = pymarc_extract(bib.data)
@@ -52,19 +53,25 @@ def get_related(oclcnum):
         else:
             return None
 
+
 class index:
+
     def GET(self):
         print render.index()
 
+
 class related:
+
     def GET(self, oclcnum):
-        numcite = CitationRequest(wskey=WSKEY, rec_num=oclcnum).get_response().data
+        numcite = CitationRequest(wskey=WSKEY, \
+                    rec_num=oclcnum).get_response().data
         print render.related(oclcnum=oclcnum, numcite=numcite,
                                 response=get_related(oclcnum))
-    
+
     def POST(self):
         oclcnum = web.input().oclcnum
-        numcite = CitationRequest(wskey=WSKEY, rec_num=oclcnum).get_response().data
+        numcite = CitationRequest(wskey=WSKEY, \
+                    rec_num=oclcnum).get_response().data
         print render.related(oclcnum=oclcnum, numcite=numcite,
                                 response=get_related(oclcnum))
 

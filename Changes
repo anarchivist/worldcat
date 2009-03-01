@@ -1,3 +1,6 @@
+v0.2.4 Sun Mar  1 02:02:31 EST 2009
+- Cleaning up code for PEP 8 compliance.
+
 v0.2.3 Thu Jan 29 04:30:15 EST 2009
 - Py2.6-specific bug fixes in worldcat.util.safeeval  and
   worldcat.response.__init__

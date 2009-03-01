@@ -1,17 +1,17 @@
 # Copyright (C) 2004 Sami Hangaslammi
-# 
+#
 # This file is part of worldcat, the Python WorldCat API module.
-# 
+#
 # worldcat is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # worldcat is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with worldcat.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -22,19 +22,18 @@
 import dis
 
 _const_codes = map(dis.opmap.__getitem__, [
-    'POP_TOP','ROT_TWO','ROT_THREE','ROT_FOUR','DUP_TOP',
-    'BUILD_LIST','BUILD_MAP','BUILD_TUPLE',
-    'LOAD_CONST','RETURN_VALUE','STORE_SUBSCR','STORE_MAP'
-    ])
+    'POP_TOP', 'ROT_TWO', 'ROT_THREE', 'ROT_FOUR', 'DUP_TOP',
+    'BUILD_LIST', 'BUILD_MAP', 'BUILD_TUPLE',
+    'LOAD_CONST', 'RETURN_VALUE', 'STORE_SUBSCR', 'STORE_MAP'])
 
 _expr_codes = _const_codes + map(dis.opmap.__getitem__, [
-    'UNARY_POSITIVE','UNARY_NEGATIVE','UNARY_NOT',
-    'UNARY_INVERT','BINARY_POWER','BINARY_MULTIPLY',
-    'BINARY_DIVIDE','BINARY_FLOOR_DIVIDE','BINARY_TRUE_DIVIDE',
-    'BINARY_MODULO','BINARY_ADD','BINARY_SUBTRACT',
-    'BINARY_LSHIFT','BINARY_RSHIFT','BINARY_AND','BINARY_XOR',
-    'BINARY_OR',
-    ])
+    'UNARY_POSITIVE', 'UNARY_NEGATIVE', 'UNARY_NOT',
+    'UNARY_INVERT', 'BINARY_POWER', 'BINARY_MULTIPLY',
+    'BINARY_DIVIDE', 'BINARY_FLOOR_DIVIDE', 'BINARY_TRUE_DIVIDE',
+    'BINARY_MODULO', 'BINARY_ADD', 'BINARY_SUBTRACT',
+    'BINARY_LSHIFT', 'BINARY_RSHIFT', 'BINARY_AND', 'BINARY_XOR',
+    'BINARY_OR'])
+
 
 def _get_opcodes(codeobj):
     """_get_opcodes(codeobj) -> [opcodes]
@@ -55,7 +54,8 @@ def _get_opcodes(codeobj):
             i += 3
         else:
             i += 1
-    return opcodes        
+    return opcodes
+
 
 def test_expr(expr, allowed_codes):
     """test_expr(expr) -> codeobj
@@ -96,13 +96,14 @@ def const_eval(expr):
     c = test_expr(expr, _const_codes)
     return eval(c)
 
+
 def expr_eval(expr):
     """expr_eval(expression) -> value
 
     Safe Python expression evaluation
 
     Evaluates a string that contains an expression that only
-    uses Python constants. This can be used to e.g. evaluate 
+    uses Python constants. This can be used to e.g. evaluate
     a numerical expression from an untrusted source.
 
     >>> expr_eval("1+2")

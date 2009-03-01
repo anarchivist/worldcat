@@ -17,15 +17,17 @@ from multiprocessing import Pool
 
 REG_BASE_NS = 'info:rfa/rfaRegistry/xmlSchemas/institution'
 
+
 class QGoogleGC(gc.Google):
     """subclassing the Google geocoder from geopy because of its
     annoying print statements"""
+
     def __init__(self, api_key=None, domain='maps.google.com',
                  resource='maps/geo', format_string='%s',
                  output_format='kml'):
         super(QGoogleGC, self).__init__(api_key, domain, resource,
                                         format_string, output_format)
-    
+
     def geocode_url(self, url, exactly_one=True):
         page = urlopen(url)
         dispatch = getattr(self, 'parse_' + self.output_format)
@@ -35,7 +37,7 @@ WSKEY = 'your worldcat api key'
 GMAPKEY = 'your google maps api key'
 
 XPATHS = {
-    'lat': '{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}nameLocation/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}mainAddress/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}latitude',
+    'lat': '{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}nameLocation''/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}mainAddress/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}latitude',
     'lng':
 '{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}nameLocation/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}mainAddress/{info:rfa/rfaRegistry/xmlSchemas/institutions/nameLocation}longitude',
 }
@@ -46,9 +48,9 @@ urls = (
         '/locations', 'locations',
         '/json', 'json',
         '/(locations|json)?__history__.html', 'history',
-        '/(.*)favicon.ico', 'history'
-        )
+        '/(.*)favicon.ico', 'history')
 render = web.template.render('templates/')
+
 
 def process_libraries(result):
     _ = {}
@@ -76,15 +78,18 @@ def process_libraries(result):
 
 
 class index:
+
     def GET(self):
-        rdata = {'key': GMAPKEY, 'ctr': ('40.77','-73.98')}
+        rdata = {'key': GMAPKEY, 'ctr': ('40.77', '-73.98')}
         return render.index(rdata=rdata)
 
+
 class json:
+
     def GET(self):
         args = web.input(oclcnum=None, zip='11216')
         jsonout = {'items': [],
-                    'types': {'library': {'pluralLabel': 'libraries'}} }
+                    'types': {'library': {'pluralLabel': 'libraries'}}}
         lookup = LibrariesRequest(wskey=WSKEY, rec_num=args.oclcnum,
                     location=args.zip, maximumLibraries=100).get_response()
         results = ET.XML(lookup.data)
@@ -92,13 +97,15 @@ class json:
         web.header('Content-Type', 'application/json')
         return simplejson.dumps(jsonout)
 
+
 class locations:
+
     def GET(self):
-    	rdata = web.input(oclcnum=None, zip='11216')
-    	c, rdata['ctr'] = gcoder.geocode(rdata['zip'])
-    	rdata['key'] = GMAPKEY
+        rdata = web.input(oclcnum=None, zip='11216')
+        c, rdata['ctr'] = gcoder.geocode(rdata['zip'])
+        rdata['key'] = GMAPKEY
         rdata['cit'] = CitationRequest(wskey=WSKEY,
-                            rec_num=rdata['oclcnum']).get_response().data
+                        rec_num=rdata['oclcnum']).get_response().data
         o = xOCLCNUMRequest(rec_num=rdata['oclcnum']).get_response().data
         rdata['others'] = []
         try:
@@ -108,13 +115,13 @@ class locations:
                     rdata['others'].extend(_['oclcnum'])
         except:
             pass
-	    c, (lat, lon) = gcoder.geocode(rdata['zip'])
+        c, (lat, lon) = gcoder.geocode(rdata['zip'])
         return render.locations(rdata=rdata)
-    
+
     def POST(self):
-    	rdata = web.input(oclcnum=None, zip='11216')
-    	c, rdata['ctr'] = gcoder.geocode(rdata['zip'])
-    	rdata['key'] = GMAPKEY
+        rdata = web.input(oclcnum=None, zip='11216')
+        c, rdata['ctr'] = gcoder.geocode(rdata['zip'])
+        rdata['key'] = GMAPKEY
         rdata['cit'] = CitationRequest(wskey=WSKEY,
                             rec_num=rdata['oclcnum']).get_response().data
         o = xOCLCNUMRequest(rec_num=rdata['oclcnum']).get_response().data
@@ -126,16 +133,19 @@ class locations:
                     rdata['others'].extend(_['oclcnum'])
         except:
             pass
-	    c, (lat, lon) = gcoder.geocode(rdata['zip'])
+        c, (lat, lon) = gcoder.geocode(rdata['zip'])
         return render.locations(rdata=rdata)
-        
+
+
 class history:
+
     def GET(self, _=None):
         return '<html><body></body></html>'
 
+
 def runfcgi_apache(func):
     web.wsgi.runfcgi(func, None)
-      
+
 if __name__ == '__main__':
     #web.wsgi.runwsgi = runfcgi_apache
     web.application(urls, globals()).run()
