@@ -1,3 +1,6 @@
+v0.2.5 Mon Mar 23 16:55:33 EDT 2009
+- Fixing issues with opcode mapping in worldcat.util.safeeval for Python < 2.6
+
 v0.2.4 Sun Mar  1 02:02:31 EST 2009
 - Cleaning up code for PEP 8 compliance.
 
