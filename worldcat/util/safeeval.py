@@ -1,4 +1,5 @@
 # Copyright (C) 2004 Sami Hangaslammi
+# Copyright (C) 2009 Mark A. Matienzo
 #
 # This file is part of worldcat, the Python WorldCat API module.
 #
@@ -17,14 +18,20 @@
 
 # util/safeeval.py - Safe evaluation of python constants and expressions
 
-# taken from http://code.activestate.com/recipes/286134/
+# modified from http://code.activestate.com/recipes/286134/
 
 import dis
+import sys
 
 _const_codes = map(dis.opmap.__getitem__, [
     'POP_TOP', 'ROT_TWO', 'ROT_THREE', 'ROT_FOUR', 'DUP_TOP',
     'BUILD_LIST', 'BUILD_MAP', 'BUILD_TUPLE',
-    'LOAD_CONST', 'RETURN_VALUE', 'STORE_SUBSCR', 'STORE_MAP'])
+    'LOAD_CONST', 'RETURN_VALUE', 'STORE_SUBSCR'])
+
+_pyversion = sys.version.split()[0].split('.')
+
+if map(int, _pyversion) >= [2, 6]:
+    _const_codes.append(dis.opmap['STORE_MAP'])
 
 _expr_codes = _const_codes + map(dis.opmap.__getitem__, [
     'UNARY_POSITIVE', 'UNARY_NEGATIVE', 'UNARY_NOT',
