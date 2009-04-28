@@ -7,11 +7,11 @@ point your web browser at http://localhost:8080/
 """
 from urllib2 import urlopen, HTTPError
 try:
-    import json
+    import json as simplejson
 except ImportError:
-    import simplejson as json
+    import simplejson
 try:
-    from xml.etree.ElementTree import ElementTree as ET
+    from xml.etree import ElementTree as ET
 except ImportError:
     from elementtree import ElementTree as ET
 try:
@@ -104,7 +104,7 @@ class json:
         results = ET.XML(lookup.data)
         jsonout['items'] = Pool(processes=20).map(process_libraries, results)
         web.header('Content-Type', 'application/json')
-        return json.dumps(jsonout)
+        return simplejson.dumps(jsonout)
 
 
 class locations:
