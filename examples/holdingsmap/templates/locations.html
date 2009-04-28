@@ -30,7 +30,7 @@ $def with (rdata)
         </div>
         <div style="margin-bottom: 5%">
               <h2>Find holdings for another item</h2>
-              <form method="post" action="/locations">
+              <form method="get" action="/locations">
               <p><label for="ox">OCLC number</label><input type="text" name="oclcnum" size="12" id="ox"/><br/><label for="zx">ZIP code</label><input type="text" name="zip" size="7" id="zx" value="$rdata['zip']"/><input type="submit" value="Search"/></p>
 	      </form>
           </div>

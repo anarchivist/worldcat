@@ -118,24 +118,6 @@ class locations:
         c, (lat, lon) = gcoder.geocode(rdata['zip'])
         return render.locations(rdata=rdata)
 
-    def POST(self):
-        rdata = web.input(oclcnum=None, zip='11216')
-        c, rdata['ctr'] = gcoder.geocode(rdata['zip'])
-        rdata['key'] = GMAPKEY
-        rdata['cit'] = CitationRequest(wskey=WSKEY,
-                            rec_num=rdata['oclcnum']).get_response().data
-        o = xOCLCNUMRequest(rec_num=rdata['oclcnum']).get_response().data
-        rdata['others'] = []
-        try:
-            for _ in o['list']:
-                if _.has_key('presentOclcnum') is False \
-                    and _['oclcnum'][0] not in _['oclcnum']:
-                    rdata['others'].extend(_['oclcnum'])
-        except:
-            pass
-        c, (lat, lon) = gcoder.geocode(rdata['zip'])
-        return render.locations(rdata=rdata)
-
 
 class history:
 
