@@ -5,15 +5,24 @@ dependencies: web.py, worldcat, simplejson, geopy, & elementtree
 to run: python holdingsmap.py
 point your web browser at http://localhost:8080/
 """
+from urllib2 import urlopen, HTTPError
+try:
+    import json
+except ImportError:
+    import simplejson as json
+try:
+    from xml.etree.ElementTree import ElementTree as ET
+except ImportError:
+    from elementtree import ElementTree as ET
+try:
+    from multiprocessing import Pool
+except ImportError:
+    from processing import Pool
+import web
+from geopy import geocoders as gc
 from worldcat.request.search import LibrariesRequest, CitationRequest
 from worldcat.request.xid import xOCLCNUMRequest
 from worldcat.request.registry import OCLCSymbolRequest
-import simplejson
-import web
-from elementtree import ElementTree as ET
-from urllib2 import urlopen, HTTPError
-from geopy import geocoders as gc
-from multiprocessing import Pool
 
 REG_BASE_NS = 'info:rfa/rfaRegistry/xmlSchemas/institution'
 
@@ -95,7 +104,7 @@ class json:
         results = ET.XML(lookup.data)
         jsonout['items'] = Pool(processes=20).map(process_libraries, results)
         web.header('Content-Type', 'application/json')
-        return simplejson.dumps(jsonout)
+        return json.dumps(jsonout)
 
 
 class locations:
