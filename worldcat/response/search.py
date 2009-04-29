@@ -42,5 +42,6 @@ class SearchAPIResponse(WorldCatResponse):
         elif self.response_type in ('BibRequest', 'SRURequest'):
             self.record_format = 'marcxml'
             if 'recordSchema' in _r.args:
-                if _r.args['recordSchema'] == 'info:srw/schema/1/dc':
+                if _r.args['recordSchema'] in \
+                    ['info:srw/schema/1/dc', 'info:srw/schema/1/dc-v1.1']:
                     self.record_format = 'dc'

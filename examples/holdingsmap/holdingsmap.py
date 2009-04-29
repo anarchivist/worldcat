@@ -100,7 +100,7 @@ class json:
         jsonout = {'items': [],
                     'types': {'library': {'pluralLabel': 'libraries'}}}
         lookup = LibrariesRequest(wskey=WSKEY, rec_num=args.oclcnum,
-                    location=args.zip, maximumLibraries=100).get_response()
+                    location=args.zip, maximumLibraries=50).get_response()
         results = ET.XML(lookup.data)
         jsonout['items'] = Pool(processes=20).map(process_libraries, results)
         web.header('Content-Type', 'application/json')
@@ -124,7 +124,6 @@ class locations:
                     rdata['others'].extend(_['oclcnum'])
         except:
             pass
-        c, (lat, lon) = gcoder.geocode(rdata['zip'])
         return render.locations(rdata=rdata)
 
 

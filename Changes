@@ -1,3 +1,11 @@
+v0.3.0 Tue Apr 28 23:01:59 EDT 2009
+- Extensive cleanup on examples/holdingsmap/holdingsmap.py
+- Addition of RegistryRequest class; OCLCSymbolRequest is now a subclass of 
+  this instead of WorldCatRequest
+- Clean up of docstrings
+- Fixes to worldcat.request.search and worldcat.response.search for variant
+  representations of formats of the recordSchema parameter
+
 v0.2.5 Mon Mar 23 16:55:33 EDT 2009
 - Fixing issues with opcode mapping in worldcat.util.safeeval for Python < 2.6
 

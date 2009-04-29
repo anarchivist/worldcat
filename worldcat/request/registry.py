@@ -27,27 +27,34 @@ from urllib import quote
 
 BASE_REG_URL = 'http://worldcat.org/webservices/registry'
 
+class RegistryRequest(WorldCatRequest):
+    """request.registry.RegistryRequest: base class for registry requests"""
+    
+    def __init__(self, **kwargs):
+        """Constructor for RegistryRequest."""
+        WorldCatRequest.__init__(self, **kwargs)
 
-class OCLCSymbolRequest(WorldCatRequest):
+    def get_response(self):
+        self.http_get()
+        return RegistryResponse(self)
+
+
+class OCLCSymbolRequest(RegistryRequest):
     """request.registry.OCLCSymbolRequest: get registry data by OCLC symbol"""
 
     def __init__(self, symbol=None, **kwargs):
-        """Constructor for LookupByOCLCSymbolRequest."""
+        """Constructor for OCLCSymbolRequest."""
         if 'serviceLabel' not in kwargs:
             kwargs['serviceLabel'] = 'content'
-        WorldCatRequest.__init__(self, **kwargs)
+        RegistryRequest.__init__(self, **kwargs)
         self.symbol = symbol
 
     def api_url(self):
         self.url = '%s/lookup/Institutions/oclcSymbol/%s' \
             % (BASE_REG_URL, quote(self.symbol))
 
-    def get_response(self):
-        self.http_get()
-        return RegistryResponse(self)
-
     def subclass_validator(self, quiet=False):
-        """Validator method for LookupByOCLCSymbolRequests."""
+        """Validator method for OCLCSymbolRequests."""
         if self.symbol == None:
             if quiet == True:
                 return False

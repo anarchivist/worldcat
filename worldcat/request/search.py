@@ -47,7 +47,9 @@ class SearchAPIRequest(WorldCatRequest):
             'servicelevel': ('default', 'full'),
             'cformat': ('apa', 'chicago', 'harvard',
                         'mla', 'turabian', 'all'),
-            'recordSchema': ('info:srw/schema/1/marcxml-v1.1',
+            'recordSchema': ('info:srw/schema/1/marcxml',
+                                'info:srw/schema/1/marcxml-v1.1',
+                                'info:srw/schema/1/dc',
                                 'info:srw/schema/1/dc-v1.1'),
             'format': ('atom', 'rss')}
 
