@@ -1,3 +1,7 @@
+v0.3.1 Thu May 28 15:51:16 EDT 2009
+- Addition of examples/gae, a sample Google App Engine applications for doing
+  WorldCat queries with JSONP output. Thanks to Etienne Posthumus.
+
 v0.3.0 Tue Apr 28 23:01:59 EDT 2009
 - Extensive cleanup on examples/holdingsmap/holdingsmap.py
 - Addition of RegistryRequest class; OCLCSymbolRequest is now a subclass of 

@@ -38,9 +38,10 @@ TODO
 LICENSE
 -------
 
-GPL/BSD (Dual Licensed)
+GPL/BSD (Dual Licensed), portions under the Apache License
 
 AUTHORS
 -------
 
 Mark A. Matienzo <mark@matienzo.org>
+Etienne Posthumus <etienne@pos.thum.us> (Google App Engine example)
