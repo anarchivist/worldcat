@@ -92,7 +92,7 @@ class xISSNRequest(xIDRequest):
         xIDRequest.__init__(self, rec_num, **kwargs)
         self._validators = {
             'method': ('getForms', 'getHistory', 'fixChecksum',
-                        'getMetadata', 'getEditions'),
+                        'getMetadata', 'getEditions', 'hyphen'),
             'format': ('xml', 'html', 'json', 'python',
                         'ruby', 'text', 'csv', 'php')}
 
@@ -102,7 +102,7 @@ class xISSNRequest(xIDRequest):
 
 
 class xISBNRequest(xIDRequest):
-    """request.xisbn.xISBNRequest: Class for xISBN requests
+    """request.xid.xISBNRequest: Class for xISBN requests
     """
 
     def __init__(self, rec_num=None, **kwargs):
@@ -119,30 +119,17 @@ class xISBNRequest(xIDRequest):
             % self.rec_num
 
 
-class xLCCNRequest(xIDRequest):
-    """request.xisbn.xLCCNRequest: Class for xID LCCN requests
-
-    """
-
-    def __init__(self, rec_num=None, **kwargs):
-        """Constructor method for xISBNRequests."""
-        xIDRequest.__init__(self, rec_num, **kwargs)
-        self._validators = {
-            'method': ('getVariants', 'getMetadata', 'getEditions'),
-            'format': ('xml', 'html', 'json', 'python',
-                        'ruby', 'txt', 'csv', 'php')}
-
-    def api_url(self):
-        self.url = 'http://xisbn.worldcat.org/webservices/xid/lccn/%s' \
-            % self.rec_num
-
-
 class xOCLCNUMRequest(xIDRequest):
-    """request.xisbn.xOCLCNUMRequest: Class for xOCLCNUM requests
+    """request.xid.xOCLCNUMRequest: Class for xOCLCNUM requests
+    
+    This now replaces the old xOCLCNUMRequest class in worldcat >= 0.3.1. 
+    xOCLCNUMRequest now takes a 'type' argument; one of "oclcnum", "lccn",
+    or "owi", for OCLC record numbers, Library of Congress Catalog Numbers, or
+    OCLC Work Identifiers.
 
     """
 
-    def __init__(self, rec_num=None, **kwargs):
+    def __init__(self, rec_num=None, numtype='oclcnum' **kwargs):
         """Constructor method for xISBNRequests."""
         xIDRequest.__init__(self, rec_num, **kwargs)
         self._validators = {
@@ -151,5 +138,5 @@ class xOCLCNUMRequest(xIDRequest):
                         'ruby', 'txt', 'csv', 'php')}
 
     def api_url(self):
-        self.url = 'http://xisbn.worldcat.org/webservices/xid/oclcnum/%s' \
-            % self.rec_num
+        self.url = 'http://xisbn.worldcat.org/webservices/xid/%s/%s' \
+            % (numtype, self.rec_num)

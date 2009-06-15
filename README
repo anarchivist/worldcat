@@ -34,6 +34,7 @@ TODO
 - Write detailed documentation
 - Add support for WorldCat Identities, Terminologies Services, Metadata 
   Crosswalk Services, and WorldCat Registry Search
+- Add access token support to xISBN and xISSN requests
 
 LICENSE
 -------
