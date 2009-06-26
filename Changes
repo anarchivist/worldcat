@@ -1,9 +1,13 @@
+v0.3.3 Fri Jun 26 15:48:10 EDT 2009
+- Correcting a typo in request.xid.xOCLCNUM request (thanks to Brandon Craig
+  Rhodes for spotting this).`
+
 v0.3.2 Sun Jun 14 22:24:12 EDT 2009
 - Modified request.xid.xOCLCNUMRequest to process requests for OCLC numbers,
   LCCNs, and OCLC work identifiers; removed request.xid.xLCCNRequest
 
 v0.3.1 Thu May 28 15:51:16 EDT 2009
-- Addition of examples/gae, a sample Google App Engine applications for doing
+- Addition of examples/gae, a sample Google App Engine application for doing
   WorldCat queries with JSONP output. Thanks to Etienne Posthumus.
 
 v0.3.0 Tue Apr 28 23:01:59 EDT 2009

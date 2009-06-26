@@ -129,7 +129,7 @@ class xOCLCNUMRequest(xIDRequest):
 
     """
 
-    def __init__(self, rec_num=None, numtype='oclcnum' **kwargs):
+    def __init__(self, rec_num=None, numtype='oclcnum', **kwargs):
         """Constructor method for xISBNRequests."""
         xIDRequest.__init__(self, rec_num, **kwargs)
         self._validators = {
