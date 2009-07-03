@@ -132,6 +132,7 @@ class xOCLCNUMRequest(xIDRequest):
     def __init__(self, rec_num=None, numtype='oclcnum', **kwargs):
         """Constructor method for xISBNRequests."""
         xIDRequest.__init__(self, rec_num, **kwargs)
+        self.numtype = numtype
         self._validators = {
             'method': ('getVariants', 'getMetadata', 'getEditions'),
             'format': ('xml', 'html', 'json', 'python',
@@ -139,4 +140,4 @@ class xOCLCNUMRequest(xIDRequest):
 
     def api_url(self):
         self.url = 'http://xisbn.worldcat.org/webservices/xid/%s/%s' \
-            % (numtype, self.rec_num)
+            % (self.numtype, self.rec_num)

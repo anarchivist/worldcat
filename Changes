@@ -1,6 +1,9 @@
+v0.3.4 Thu Jul  2 20:20:22 EDT 2009
+- Fixing an error in the recently modified request.xid.xOCLCNUMRequest
+
 v0.3.3 Fri Jun 26 15:48:10 EDT 2009
 - Correcting a typo in request.xid.xOCLCNUM request (thanks to Brandon Craig
-  Rhodes for spotting this).`
+  Rhodes for spotting this).
 
 v0.3.2 Sun Jun 14 22:24:12 EDT 2009
 - Modified request.xid.xOCLCNUMRequest to process requests for OCLC numbers,
