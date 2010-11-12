@@ -14,8 +14,8 @@ Development Status :: 4 - Beta
 
 setup(
     name = 'worldcat',
-    version = '0.3.4',  # remember to update worldcat/__init__.py on release!
-    url = 'http://matienzo.org/project/worldcat',
+    version = '0.3.5a',  # remember to update worldcat/__init__.py on release!
+    url = 'http://github.com/anarchivist/worldcat',
     author = 'Mark A. Matienzo',
     author_email = 'mark@matienzo.org',
     license = 'GPL/BSD',
