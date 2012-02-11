@@ -28,7 +28,7 @@ _const_codes = map(dis.opmap.__getitem__, [
     'BUILD_LIST', 'BUILD_MAP', 'BUILD_TUPLE',
     'LOAD_CONST', 'RETURN_VALUE', 'STORE_SUBSCR'])
 
-_pyversion = sys.version.split()[0].split('.')
+_pyversion = sys.version.split()[0].split('.')[:1]
 
 if map(int, _pyversion) >= [2, 6]:
     _const_codes.append(dis.opmap['STORE_MAP'])
