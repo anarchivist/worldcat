@@ -19,9 +19,9 @@ You can use easy_install to install worldcat:
     easy_install worldcat
     
 If you prefer, you can check out the latest version of the source using
-Mercurial:
+Git:
 
-    hg clone https://bitbucket.org/anarchivist/worldcat/
+    git clone https://github.com/anarchivist/worldcat.git
     
 To install:
 

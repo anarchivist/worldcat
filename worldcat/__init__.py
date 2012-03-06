@@ -17,7 +17,7 @@
 
 # __init__.py - Initialize worldcat module
 
-__version__ = '0.3.5a'
+__version__ = '0.3.6'
 
 import worldcat.request
 import worldcat.response
