@@ -92,7 +92,7 @@ class xISSNRequest(xIDRequest):
         xIDRequest.__init__(self, rec_num, **kwargs)
         self._validators = {
             'method': ('getForms', 'getHistory', 'fixChecksum',
-                        'getMetadata', 'getEditions', 'hyphen'),
+                        'getMetadata', 'getEditions'),
             'format': ('xml', 'html', 'json', 'python',
                         'ruby', 'text', 'csv', 'php')}
 
@@ -110,7 +110,7 @@ class xISBNRequest(xIDRequest):
         xIDRequest.__init__(self, rec_num, **kwargs)
         self._validators = {
             'method': ('to10', 'to13', 'fixChecksum',
-                        'getMetadata', 'getEditions'),
+                        'getMetadata', 'getEditions', 'hyphen'),
             'format': ('xml', 'html', 'json', 'python',
                         'ruby', 'txt', 'csv', 'php')}
 
