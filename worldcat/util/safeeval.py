@@ -1,5 +1,5 @@
 # Copyright (C) 2004 Sami Hangaslammi
-# Copyright (C) 2009 Mark A. Matienzo
+# Copyright (C) 2009-2012 Mark A. Matienzo
 #
 # This file is part of worldcat, the Python WorldCat API module.
 #
@@ -28,7 +28,7 @@ _const_codes = map(dis.opmap.__getitem__, [
     'BUILD_LIST', 'BUILD_MAP', 'BUILD_TUPLE',
     'LOAD_CONST', 'RETURN_VALUE', 'STORE_SUBSCR'])
 
-_pyversion = sys.version.split()[0].split('.')[:1]
+_pyversion = sys.version.split()[0].split('.')[:2]
 
 if map(int, _pyversion) >= [2, 6]:
     _const_codes.append(dis.opmap['STORE_MAP'])
