@@ -1,3 +1,9 @@
+NOTE
+----
+
+This package has been archived and is no longer maintained. It does
+not and will not work with versions of the WorldCat APIs after 2021.
+
 DESCRIPTION
 -----------
 
@@ -44,5 +50,5 @@ GPL/BSD (Dual Licensed), portions under the Apache License
 AUTHORS
 -------
 
-Mark A. Matienzo <mark@matienzo.org>
+María A. Matienzo <maria@matienzo.org>
 Etienne Posthumus <etienne@pos.thum.us> (Google App Engine example)

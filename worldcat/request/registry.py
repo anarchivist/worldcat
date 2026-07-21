@@ -1,4 +1,4 @@
-# Copyright (C) 2009 Mark A. Matienzo
+# Copyright (C) 2009 María A. Matienzo
 #
 # This file is part of worldcat, the Python WorldCat API module.
 #

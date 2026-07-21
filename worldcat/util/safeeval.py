@@ -1,5 +1,5 @@
 # Copyright (C) 2004 Sami Hangaslammi
-# Copyright (C) 2009-2012 Mark A. Matienzo
+# Copyright (C) 2009-2012 María A. Matienzo
 #
 # This file is part of worldcat, the Python WorldCat API module.
 #

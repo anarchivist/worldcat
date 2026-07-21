@@ -1,3 +1,7 @@
+v0.4.0 Mon Jul 20 17:17:14 PDT 2026
+- unreleased version with no functional changes to serve as the 
+  archival reference point.
+
 v0.3.6 Tue Mar  6 11:07:04 EST 2012
 - worldcat.util.safeeval: Only use the major and minor Python version to
   determine supported opcodes; sometimes the patch version is not an
